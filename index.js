@@ -26,21 +26,30 @@ async function run() {
             const service= await cursor.toArray();
             res.send(service);
         })
-        // Get experts data
-        app.get("/experts", async (req, res) => {
+
+
+        // Get spicepic service data
+        app.get("/service/:id",async (req, res) => {
+            const id=req.params.id;
+            const query={_id:ObjectId(id)};
+            const service =await carCollection.findOne(query);
+            res.send(service);
+        })
+
+         // Get experts data
+         app.get("/experts", async (req, res) => {
             const query={};
             const cursor=expertsCollection.find(query);
             const experts= await cursor.toArray();
             res.send(experts);
         })
 
-
-        // Get spicepic data
-        app.get("/services/:id",async (req, res) => {
+        // Get spicepic expert data
+        app.get("/expert/:id",async (req, res) => {
             const id=req.params.id;
             const query={_id:ObjectId(id)};
-            const service =await carCollection.findOne(query);
-            res.send(service);
+            const experts =await expertsCollection.findOne(query);
+            res.send(experts);
         })
     }finally{
 
