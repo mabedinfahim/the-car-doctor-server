@@ -16,8 +16,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
-       const carCollection = client.db("theCarDoctor").collection("services");
-       const expertsCollection = client.db("theCarDoctor").collection("experts");
+        const carCollection = client.db("theCarDoctor").collection("services");
+        const expertsCollection = client.db("theCarDoctor").collection("experts");
 
         // Get services data
         app.get("/services", async (req, res) => {
@@ -36,6 +36,14 @@ async function run() {
             res.send(service);
         })
 
+
+        // Post a service data
+        app.post("/services",async (req, res) => {
+            const newService=req.body;
+            const result=await carCollection.insertOne(newService);
+            res.send(result);
+        })
+
          // Get experts data
          app.get("/experts", async (req, res) => {
             const query={};
@@ -50,6 +58,13 @@ async function run() {
             const query={_id:ObjectId(id)};
             const experts =await expertsCollection.findOne(query);
             res.send(experts);
+        })
+
+        //Post a expert data
+        app.post("/experts", async (req, res) => {
+            const newExpert=req.body;
+            const result = await expertsCollection.insertOne(newExpert);
+            res.send(result);
         })
     }finally{
 
