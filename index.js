@@ -75,7 +75,7 @@ async function run() {
         })
 
         // Delete a expert data 
-        app.delete('/experts/:id', async (req, res) => {
+        app.delete('/expert/:id', async (req, res) => {
             const id = req.params.id;
             const query = {_id:ObjectId(id)}
             const result = await expertsCollection.deleteOne(query);
