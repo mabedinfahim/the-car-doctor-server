@@ -36,11 +36,18 @@ async function run() {
             res.send(service);
         })
 
-
         // Post a service data
         app.post("/services",async (req, res) => {
             const newService=req.body;
             const result=await carCollection.insertOne(newService);
+            res.send(result);
+        })
+
+        // Delete a service data
+        app.delete("/service/:id", async (req, res)=>{
+            const id=req.params.id;
+            const query={_id:ObjectId(id)}
+            const result=await carCollection.deleteOne(query)
             res.send(result);
         })
 
@@ -65,6 +72,14 @@ async function run() {
             const newExpert=req.body;
             const result = await expertsCollection.insertOne(newExpert);
             res.send(result);
+        })
+
+        // Delete a expert data 
+        app.delete('/experts/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)}
+            const result = await expertsCollection.deleteOne(query);
+            res.send(result)
         })
     }finally{
 
